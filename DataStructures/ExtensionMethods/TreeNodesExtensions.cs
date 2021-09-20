@@ -131,6 +131,28 @@ namespace DataStructures.ExtensionMethods
 			}
 			return false;
 		}
+		
+		public static List<List<nt>> VerticalOrderTraversal(TreeNode node)
+		{
+			Dictionary<int, List<int>> keyValuePairs = new Dictionary<int, List<int>>();
+			int hDis = 0;
+			TraverseVertically(keyValuePairs, hDis, node);
+			List<List<int>> answer = new List<List<int>>();
+			foreach(var item in keyValuePairs.OrderBy(key => key.Key))
+			{
+				answer.Add(new List<int>(item.Value));
+			}
+			return answer;
+		}
+		
+		private static void TraverseVertically(Dictionary<int, List<int>> kvp, int hDis, TreeNode node)
+		{
+			if(node == null) return;
+			if(!kvp.ContainsKey(hDis)) kvp.Add(hDis, new List<int>());
+			kvp[hDis].Add(node.Data);
+			TraverseVertically(kvp, hDis - 1, node.Left);
+			TraverseVertically(kvp, hDis + 1, node.Right);
+		}
 
 		private static bool IsSubTreeSymmetric(TreeNode node1, TreeNode node2)
 		{
