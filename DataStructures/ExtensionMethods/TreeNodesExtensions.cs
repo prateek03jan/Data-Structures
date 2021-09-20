@@ -132,7 +132,7 @@ namespace DataStructures.ExtensionMethods
 			return false;
 		}
 		
-		public static List<List<nt>> VerticalOrderTraversal(TreeNode node)
+		public static List<List<int>> VerticalOrderTraversal(TreeNode node)
 		{
 			Dictionary<int, List<int>> keyValuePairs = new Dictionary<int, List<int>>();
 			int hDis = 0;
