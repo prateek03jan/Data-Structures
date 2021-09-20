@@ -132,6 +132,19 @@ namespace DataStructures.ExtensionMethods
 			return false;
 		}
 		
+		public List<int> GetTopView(Node root)
+	        {
+			Dictionary<int, List<int>> keyValuePairs = new Dictionary<int, List<int>>();
+			int hDis = 0;
+			TraverseVertically(keyValuePairs, hDis, node);
+			List<int> answer = new List<int>();
+			foreach(var item in keyValuePairs.OrderBy(key => key.Key))
+			{
+				answer.Add(item.Value[0]);
+			}
+			return answer;
+	    	}
+		
 		public static List<List<int>> VerticalOrderTraversal(TreeNode node)
 		{
 			Dictionary<int, List<int>> keyValuePairs = new Dictionary<int, List<int>>();
