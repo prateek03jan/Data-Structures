@@ -179,5 +179,15 @@ namespace DataStructures.ExtensionMethods
 
 			return false;
 		}
+		
+		public bool IsValidBST(TreeNode root)
+		{
+			if(root == null) return true;
+			if(root.Left != null && root.Left.Data >= root.val) return false;
+			if(root.right != null && root.Right.Data <= root.val) return false;
+			if(!IsValidBST(root.Left) || !IsValidBST(root.Right)) return false;
+
+			return true;
+		}
 	}
 }
