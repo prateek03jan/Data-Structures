@@ -9,6 +9,16 @@ namespace DataStructures.ExtensionMethods
 {
 	public static class TreeNodesExtensions
 	{
+		
+		/**********************************************************
+		Algo - 
+			Step 1 : If node is not present, return 0
+			Step 2 : Calculate the height recursively of the right tree
+			Step 3 : Calculate the height recursively of the left tree
+			Step 4 : Check for the greater height and return greater height + 1
+			
+			+1 is added to add the root node height
+		**********************************************************/
 		public static int GetHeightOfTree(this TreeNode node)
 		{
 			if (node == null) return 0;
@@ -116,12 +126,15 @@ namespace DataStructures.ExtensionMethods
 		//	}
 		//	return (IList<IList<int>>)items;
 		//}
-
-		public static bool IsTreeSymmetric(this TreeNode node)
-		{
-			return IsSubTreeSymmetric(node.Left, node.Right);
-		}
-
+		
+		
+		/**********************************************************
+		Algo -
+			1. If both tree nodes are null, return true!
+			2. If both are not null and root nodes are equal root nodes
+			are equal, then call the same method to calculate the tree height
+			recursively for the left nodes and right nodes
+		**********************************************************/
 		public static bool IsSameTree(TreeNode p, TreeNode q)
 		{
 			if (p == null && q == null) return true;
@@ -133,7 +146,7 @@ namespace DataStructures.ExtensionMethods
 		}
 		
 		public List<int> GetTopView(Node root)
-	        {
+		{
 			Dictionary<int, List<int>> keyValuePairs = new Dictionary<int, List<int>>();
 			int hDis = 0;
 			TraverseVertically(keyValuePairs, hDis, node);
@@ -143,7 +156,7 @@ namespace DataStructures.ExtensionMethods
 				answer.Add(item.Value[0]);
 			}
 			return answer;
-	    	}
+		}
 		
 		public static List<List<int>> VerticalOrderTraversal(TreeNode node)
 		{
@@ -167,6 +180,21 @@ namespace DataStructures.ExtensionMethods
 			TraverseVertically(kvp, hDis + 1, node.Right);
 		}
 
+		public bool IsValidBST(TreeNode root)
+		{
+			if(root == null) return true;
+			if(root.Left != null && root.Left.Data >= root.val) return false;
+			if(root.right != null && root.Right.Data <= root.val) return false;
+			if(!IsValidBST(root.Left) || !IsValidBST(root.Right)) return false;
+
+			return true;
+		}
+		
+		public static bool IsTreeSymmetric(this TreeNode node)
+		{
+			return IsSubTreeSymmetric(node.Left, node.Right);
+		}
+		
 		private static bool IsSubTreeSymmetric(TreeNode node1, TreeNode node2)
 		{
 			if (node1 == null && node2 == null)
@@ -178,16 +206,6 @@ namespace DataStructures.ExtensionMethods
 						&& IsSubTreeSymmetric(node1.Right, node2.Left));
 
 			return false;
-		}
-		
-		public bool IsValidBST(TreeNode root)
-		{
-			if(root == null) return true;
-			if(root.Left != null && root.Left.Data >= root.val) return false;
-			if(root.right != null && root.Right.Data <= root.val) return false;
-			if(!IsValidBST(root.Left) || !IsValidBST(root.Right)) return false;
-
-			return true;
 		}
 	}
 }
