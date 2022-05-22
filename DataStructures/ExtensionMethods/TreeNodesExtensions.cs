@@ -9,7 +9,7 @@ namespace DataStructures.ExtensionMethods
 {
 	public static class TreeNodesExtensions
 	{
-		
+
 		/**********************************************************
 		Algo - 
 			Step 1 : If node is not present, return 0
@@ -29,7 +29,6 @@ namespace DataStructures.ExtensionMethods
 				return lHeight > rHeight ? lHeight + 1 : rHeight + 1;
 			}
 		}
-
 		public static List<int> TraverseTreeLevelOrderSameLine(this TreeNode node)
 		{
 			if (node == null) return default(List<int>);
@@ -52,7 +51,6 @@ namespace DataStructures.ExtensionMethods
 				return items;
 			}
 		}
-
 		public static List<List<int>> TraverseTreeLevelOrderNewLine(this TreeNode node)
 		{
 			if (node == null) return default(List<List<int>>);
@@ -126,8 +124,8 @@ namespace DataStructures.ExtensionMethods
 		//	}
 		//	return (IList<IList<int>>)items;
 		//}
-		
-		
+
+
 		/**********************************************************
 		Algo -
 			1. If both tree nodes are null, return true!
@@ -144,57 +142,51 @@ namespace DataStructures.ExtensionMethods
 			}
 			return false;
 		}
-		
-		public List<int> GetTopView(Node root)
+		public static List<int> GetTopView(TreeNode root)
 		{
 			Dictionary<int, List<int>> keyValuePairs = new Dictionary<int, List<int>>();
 			int hDis = 0;
-			TraverseVertically(keyValuePairs, hDis, node);
+			TraverseVertically(keyValuePairs, hDis, root);
 			List<int> answer = new List<int>();
-			foreach(var item in keyValuePairs.OrderBy(key => key.Key))
+			foreach (var item in keyValuePairs.OrderBy(key => key.Key))
 			{
 				answer.Add(item.Value[0]);
 			}
 			return answer;
 		}
-		
 		public static List<List<int>> VerticalOrderTraversal(TreeNode node)
 		{
 			Dictionary<int, List<int>> keyValuePairs = new Dictionary<int, List<int>>();
 			int hDis = 0;
 			TraverseVertically(keyValuePairs, hDis, node);
 			List<List<int>> answer = new List<List<int>>();
-			foreach(var item in keyValuePairs.OrderBy(key => key.Key))
+			foreach (var item in keyValuePairs.OrderBy(key => key.Key))
 			{
 				answer.Add(new List<int>(item.Value));
 			}
 			return answer;
 		}
-		
 		private static void TraverseVertically(Dictionary<int, List<int>> kvp, int hDis, TreeNode node)
 		{
-			if(node == null) return;
-			if(!kvp.ContainsKey(hDis)) kvp.Add(hDis, new List<int>());
+			if (node == null) return;
+			if (!kvp.ContainsKey(hDis)) kvp.Add(hDis, new List<int>());
 			kvp[hDis].Add(node.Data);
 			TraverseVertically(kvp, hDis - 1, node.Left);
 			TraverseVertically(kvp, hDis + 1, node.Right);
 		}
-
-		public bool IsValidBST(TreeNode root)
+		public static bool IsValidBST(TreeNode root)
 		{
-			if(root == null) return true;
-			if(root.Left != null && root.Left.Data >= root.val) return false;
-			if(root.right != null && root.Right.Data <= root.val) return false;
-			if(!IsValidBST(root.Left) || !IsValidBST(root.Right)) return false;
+			if (root == null) return true;
+			if (root.Left != null && root.Left.Data >= root.Data) return false;
+			if (root.Right != null && root.Right.Data <= root.Data) return false;
+			if (!IsValidBST(root.Left) || !IsValidBST(root.Right)) return false;
 
 			return true;
 		}
-		
 		public static bool IsTreeSymmetric(this TreeNode node)
 		{
 			return IsSubTreeSymmetric(node.Left, node.Right);
 		}
-		
 		private static bool IsSubTreeSymmetric(TreeNode node1, TreeNode node2)
 		{
 			if (node1 == null && node2 == null)
@@ -206,6 +198,68 @@ namespace DataStructures.ExtensionMethods
 						&& IsSubTreeSymmetric(node1.Right, node2.Left));
 
 			return false;
+		}
+
+		public static List<int> LeftView(TreeNode node)
+		{
+			List<int> left = new List<int>();
+			if (node == null)
+			{
+				return left;
+			}
+			else
+			{
+				Queue<TreeNode> queue = new Queue<TreeNode>();
+				queue.Enqueue(node);
+				while (queue.Count > 0)
+				{
+					int count = queue.Count;
+					queue.Dequeue();
+
+					for (int i = 1; i <= count; i++)
+					{
+						var item = queue.Dequeue();
+						if (node.Left != null) queue.Enqueue(node.Left);
+						if (node.Right != null) queue.Enqueue(node.Right);
+						if (i == 0)
+						{
+							left.Add(item.Data);
+						}
+					}
+				}
+			}
+			return left;
+		}
+
+		public static List<int> RightView(TreeNode node)
+		{
+			List<int> right = new List<int>();
+			if (node == null)
+			{
+				return right;
+			}
+			else
+			{
+				Queue<TreeNode> queue = new Queue<TreeNode>();
+				queue.Enqueue(node);
+				while (queue.Count > 0)
+				{
+					int count = queue.Count;
+					queue.Dequeue();
+
+					for (int i = 1; i <= count; i++)
+					{
+						var item = queue.Dequeue();
+						if (node.Left != null) queue.Enqueue(node.Left);
+						if (node.Right != null) queue.Enqueue(node.Right);
+						if (i == 0)
+						{
+							right.Add(item.Data);
+						}
+					}
+				}
+			}
+			return right;
 		}
 	}
 }

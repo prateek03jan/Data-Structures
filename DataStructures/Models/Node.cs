@@ -12,7 +12,7 @@
 	public class LinkedNode : Node
 	{
 		public Node Next { get; set; }
-		public LinkedNode(int data = 0, Node next) : base(data)
+		public LinkedNode(int data, Node next) : base(data)
 		{
 			Next = next;
 		}
@@ -22,7 +22,7 @@
 	{
 		public TreeNode Right { get; set; }
 		public TreeNode Left { get; set; }
-		public TreeNode(int data = 0, TreeNode left, TreeNode right) : base(data)
+		public TreeNode(int data, TreeNode left, TreeNode right) : base(data)
 		{
 			Left = left;
 			Right = right;
